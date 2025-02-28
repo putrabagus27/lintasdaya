@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>File Management - qadrlabs.com</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div>
+                    <h4 class="text-center my-4">Tutorial Laravel 11: Upload dan Download File @ <a
+                            href="https://qadrlabs.com">qadrlabs.com</a></h4>
+                </div>
+                <div class="card rounded">
+                    <div class="card-body">
+                        <form action="/downloadfile" method="post">
+                            @csrf
+                            <input type="text" name="nama_file" id="nama_file" class="form-control"
+                                placeholder="Nama File" value="">
+                            <!-- <button type="submit" class="btn btn-primary" id="showdata">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                                    <path d="M21 21l-6 -6"></path>
+                                </svg>
+                                Cari
+                            </button> -->
+                        </form>
+                        <button type="submit" class="btn btn-primary" id="showdata">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                                <path d="M21 21l-6 -6"></path>
+                            </svg>
+                            Cari
+                        </button>
+                        <!-- <input type="text" id="nama_file" name="nama_file" value="" class="form-control" placeholder="Kode" autocomplete="off"> -->
+                    </div>
+                </div>
+                <div class="card rounded">
+                    <div class="card-body">
+                        <a href="/download/upload" class="btn btn-md btn-primary mb-3 float-end">Upload File</a>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nama File</th>
+                                    <th scope="col" style="width: 20%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="loadtable">
+                                <!-- @forelse ($files as $file)
+                                <tr>
+                                    <td>{{ $file->original_name }}</td>
+                                    <td class="text-center">
+                                        <a href="{{route('download.unduh', $file) }}" class="btn btn-sm btn-primary">Download</a>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="2" class="text-muted text-center">Data file belum tersedia</td>
+                                </tr>
+                                @endforelse -->
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script> -->
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script> -->
+    <!-- <script>
+        $(function loadtable() {
+            var nama_file = $("#nama_file").val();
+            $.ajax({
+                type: 'POST',
+                url: '/files/datatable',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    nama_file: nama_file
+                },
+                cache: false,
+                success: function(respond) {
+                    $("#loadtable").html(respond);
+                }
+            });
+            $("#nama_file").change(function(e) {
+                loadtable();
+            });
+            loadtable();
+        });
+    </script> -->
+    <script>
+        // var $ = jQuery;
+        $(function () {
+            $("#showdata").click(function (e) {
+                var nama_file = $("#nama_file").val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/downloadfile',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        nama_file: nama_file
+                    },
+                    cache: false,
+                    success: function (respond) {
+                        $("#loadtable").html(respond);
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
